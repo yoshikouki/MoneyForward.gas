@@ -1,4 +1,4 @@
-/** @OnlyCurrentDoc */
+-/** @OnlyCurrentDoc */
 const dataSheetName = 'cashFlow'
 const fileManagedSheetName = 'imortedFiles'
 const dirPath = 'Money/CashFlow/'
@@ -10,7 +10,7 @@ function importCashFlowFromCsv() {
   const ss = SpreadsheetApp.getActiveSpreadsheet();
   const dataSheet = ss.getSheetByName(dataSheetName);
   const fileManagedSheet = ss.getSheetByName(fileManagedSheetName)
-  
+
   try {
     // csv を取得・パースして配列化
     const file = DriveApp.getFilesByName(filePath).next()
@@ -30,8 +30,8 @@ function importCashFlowFromCsv() {
     }
   } catch(err) {
     MailApp.sendEmail(
-      mailAddress, 
-      'CSV のインポートに失敗しました', 
+      mailAddress,
+      'CSV のインポートに失敗しました',
       err.message
     )
   }
