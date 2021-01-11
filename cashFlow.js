@@ -39,6 +39,11 @@ function importCashFlowFromCsv() {
         file.getSize()
       ])
     }
+    csv.sort(function (a, b) {
+      let date1 = new Date(a[1]).getTime()
+      let date2 = new Date(b[1]).getTime()
+      return(date1 - date2)
+    })
 
     // データがなかった場合は最新を2行目に設定
     const latestDataRow = (dataSheet.getLastRow() > 1) ? dataSheet.getLastRow() : 2
