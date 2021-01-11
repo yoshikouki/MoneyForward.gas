@@ -50,14 +50,8 @@ function importCashFlowFromCsv() {
     // インポート先のテーブルを初期化
     dataSheet.deleteRows(2, latestDataRow - 1)
     dataSheet.insertRowsAfter(2, latestDataRow - 1)
-
     // 収支データをテーブルへ入力
-    for (let r = 0; r < csv.length; r ++) {
-      for (let c = 0; c < csv[0].length; c ++) {
-        // Google スプレッドシートの列番号は 1 から始まるので CSV と差がある
-        dataSheet.getRange(r + 2, c + 1).setValue(csv[r][c])
-      }
-    }
+    dataSheet.getRange(2, 1, csv.length, csv[0].length).setValues(csv)
   
     // インポートファイル管理表への入力
     const latestFileManagementRow = fileManagementSheet.getLastRow()
