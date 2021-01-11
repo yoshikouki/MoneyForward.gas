@@ -32,6 +32,30 @@ function importCashFlowFromCsv() {
         dataSheet.getRange(r + 1, c + 1).setValue(csv[r][c])
       }
     }
+  
+    // インポート日時を取得
+    const timeDifference = (new Date().getTimezoneOffset() + (9 * 60)) * 60 * 1000
+    const nowDate = new Date(Date.now() + timeDifference)
+    Logger.log('nowDate: ', nowDate)
+    const importedAt = [
+      [nowDate.getFullYear(), nowDate.getMonth() + 1, nowDate.getDate()].join('/'),
+      // タイムゾーン設定ができないのでハードコーディング
+      [nowDate.getHours(), nowDate.getMinutes(), nowDate.getSeconds()].join(':')
+    ].join(' ')
+    
+    // インポート履歴への入力データ
+    importedFiles.push([
+      importedAt, 
+      file.getName(), 
+      file.getDateCreated(), 
+      file.getLastUpdated(), 
+      file.getSize()
+    ])
+
+    // インポートファイル管理表への記入
+    const latestFileManagementRow = fileManagementSheet.getLastRow()
+    const fmRow = fileManagementSheet.getRange(latestFileManagementRow + 1, 1, 1, importedFiles[0].length)
+    fmRow.setValues(importedFiles)
   } catch(err) {
     MailApp.sendEmail(
       mailAddress, 
