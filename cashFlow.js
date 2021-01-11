@@ -53,15 +53,13 @@ function importCashFlowFromCsv() {
     // 収支データをテーブルへ入力
     dataSheet.getRange(2, 1, csv.length, csv[0].length).setValues(csv)
   
-    // インポートファイル管理表への入力
-    const latestFileManagementRow = fileManagementSheet.getLastRow()
-    const fmRow = fileManagementSheet.getRange(
-      latestFileManagementRow + 1, 
+    // インポート履歴への入力
+    fileManagementSheet.getRange(
+      fileManagementSheet.getLastRow() + 1, 
       1, 
       importedFiles.length, 
       importedFiles[0].length
-    )
-    fmRow.setValues(importedFiles)
+    ).setValues(importedFiles)
   } catch(err) {
     MailApp.sendEmail(
       mailAddress, 
