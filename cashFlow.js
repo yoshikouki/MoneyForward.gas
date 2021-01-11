@@ -1,7 +1,6 @@
 /** @OnlyCurrentDoc */
 const dataSheetName = 'cashFlow'
 const fileManagedSheetName = 'imortedFiles'
-const dirPath = 'Money/CashFlow/'
 const filePath = '収入・支出詳細_2020-04-01_2020-04-30.csv'
 const fileSearchQuery = 'title contains "収入・支出詳細_"'
 const mailAddress = 'yoshikouki@gmail.com'
@@ -39,6 +38,8 @@ function importCashFlowFromCsv() {
         file.getSize()
       ])
     }
+
+    // CSV を日付順にソート
     csv.sort(function (a, b) {
       let date1 = new Date(a[1]).getTime()
       let date2 = new Date(b[1]).getTime()
