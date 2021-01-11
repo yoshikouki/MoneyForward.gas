@@ -53,6 +53,18 @@ function importCashFlowFromCsv() {
     // 収支データをテーブルへ入力
     dataSheet.getRange(2, 1, csv.length, csv[0].length).setValues(csv)
   
+    // インポート履歴をファイル名順でソート
+    importedFiles.sort(function(a,b) {
+      let fileNameA = a[1]
+      let fileNameB = b[1]
+      if (fileNameA < fileNameB) {
+        return -1
+      } else if (fileNameA > fileNameB) {
+        return 1
+      } else {
+        return 0
+      }
+    })
     // インポート履歴への入力
     fileManagementSheet.getRange(
       fileManagementSheet.getLastRow() + 1, 
