@@ -6,8 +6,8 @@
   "runtimeVersion": "V8",
   "sheets": {
     "macros": [{
-      "menuName": "無題のマクロ",
-      "functionName": "myFunction2"
+      "menuName": "Google ドライブから CSV ファイルをインポート",
+      "functionName": "importCashFlowFromCsv"
     }]
   }
 }
