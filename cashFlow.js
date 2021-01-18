@@ -49,8 +49,7 @@ function importCashFlowFromCsv() {
     // データがなかった場合は最新を2行目に設定
     const latestDataRow = (dataSheet.getLastRow() > 1) ? dataSheet.getLastRow() : 2
     // インポート先のテーブルを初期化
-    dataSheet.deleteRows(2, latestDataRow - 1)
-    dataSheet.insertRowsAfter(2, latestDataRow - 1)
+    dataSheet.getRange(2, latestDataRow).clear
     // 収支データをテーブルへ入力
     dataSheet.getRange(2, 1, csv.length, csv[0].length).setValues(csv)
   
