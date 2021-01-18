@@ -7,7 +7,16 @@
   "sheets": {
     "macros": [{
       "menuName": "Google ドライブから CSV ファイルをインポート",
-      "functionName": "importCashFlowFromCsv"
+      "functionName": "importCashFlowFromCsv",
+      "defaultShortcut": "Ctrl+Alt+Shift+1"
+    }, {
+      "menuName": "立替項目一覧(advancedPaymentTable)に現在のカラムを追加する",
+      "functionName": "addAdvancedPaymentTable",
+      "defaultShortcut": "Ctrl+Alt+Shift+3"
+    }, {
+      "menuName": "cfTable の立替などを家計項目一覧から自動入力する",
+      "functionName": "autoComplete",
+      "defaultShortcut": "Ctrl+Alt+Shift+2"
     }]
   }
 }
