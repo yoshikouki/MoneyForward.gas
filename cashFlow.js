@@ -1,14 +1,25 @@
 /** @OnlyCurrentDoc */
 const dataSheetName = 'cashFlow'
+const cfTableName = 'cfTable'
 const fileManagedSheetName = 'imortedFiles'
 const filePath = '収入・支出詳細_2020-04-01_2020-04-30.csv'
 const fileSearchQuery = 'title contains "収入・支出詳細_"'
 const mailAddress = 'yoshikouki@gmail.com'
 
+// MoneyForward csv の列番号を定義
+const calculatedCol = 0
+const dateCol = 1
+const titleCol = 2
+const amountCol = 3
+const finantialInstitutionCol = 4
+const majorClassificationCol = 5
+const middleClassificationCol = 6
+
 function importCashFlowFromCsv() {
   // スプレッドシートとデータシートを取得
   const ss = SpreadsheetApp.getActiveSpreadsheet();
   const dataSheet = ss.getSheetByName(dataSheetName);
+  const cfTable = ss.getSheetByName(cfTableName);
   const fileManagementSheet = ss.getSheetByName(fileManagedSheetName)
   
   try {
@@ -24,6 +35,7 @@ function importCashFlowFromCsv() {
       let file = csvFiles.next()
       let dataString = file.getBlob().getDataAsString('Shift_JIS')
       let data = Utilities.parseCsv(dataString)
+      // csv のヘッダーを削除
       data.shift()
       csv.push(...data)
 
@@ -52,6 +64,24 @@ function importCashFlowFromCsv() {
     dataSheet.getRange(2, latestDataRow).clear
     // 収支データをテーブルへ入力
     dataSheet.getRange(2, 1, csv.length, csv[0].length).setValues(csv)
+
+    // csv を cfTable 用に入れ替えして入力
+    const cfTableValues = csv.map((row) => {
+      let date = new Date(row[dateCol])
+      return [
+        date.getFullYear(),
+        date.getMonth() + 1,
+        date.getDate(),
+        row[titleCol],
+        row[amountCol],
+        row[finantialInstitutionCol],
+        row[majorClassificationCol],
+        row[middleClassificationCol],
+        row[calculatedCol],
+      ]
+    })
+    // すでに立替・家計が入力されているので3列目から入力する
+    cfTable.getRange(2, 3, cfTableValues.length, cfTableValues[0].length).setValues(cfTableValues)
   
     // インポート履歴をファイル名順でソート
     importedFiles.sort(function(a,b) {
